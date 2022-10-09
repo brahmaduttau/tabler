@@ -9,7 +9,7 @@
   --litepicker-is-end-color-bg: #{ var(--#{$prefix}primary) };
   --litepicker-is-today-color: #{ var(--#{$prefix}primary) };
   --litepicker-month-header-color: var(--#{$prefix}body-color);
-  --litepicker-container-months-color-bg: var(--#{$prefix}card-bg);
+  --litepicker-container-months-color-bg: var(--#{$prefix}bg-surface);
   font: inherit;
   user-select: none;
 
@@ -20,7 +20,7 @@
   .container__main {
     border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
     border-radius: var(--#{$prefix}border-radius);
-    box-shadow: $dropdown-box-shadow;
+    box-shadow: none;
   }
 
   .container__months {
@@ -52,6 +52,7 @@
 
   .datepicker-inline & .container__months {
     box-shadow: none;
+    background-color: var(--#{$prefix}bg-forms);
   }
 }
 
