@@ -1,4 +1,26 @@
 // stylelint-disable property-no-vendor-prefix
+
+:root {
+  height: 100%;
+
+  @each $color, $value in theme-colors() {
+    --#{$variable-prefix}#{$color}-lighter: #{$value};
+    --#{$variable-prefix}#{$color}-light: #{$value};
+    --#{$variable-prefix}#{$color}: #{$value};
+    --#{$variable-prefix}#{$color}-dark: #{$value};
+  }
+
+  --#{$variable-prefix}card-bg: #{$card-bg};
+  --#{$variable-prefix}card-bg-rgb: #{to-rgb($card-bg)};
+
+  --#{$variable-prefix}border-color: #{$border-color};
+  --#{$variable-prefix}border-color-rgb: #{to-rgb($border-color)};
+
+  --#{$variable-prefix}border-color-light: #{$border-color-light};
+  --#{$variable-prefix}border-color-light-rgb: #{to-rgb($border-color-light)};
+}
+
+
 body {
   overflow-y: scroll;
   letter-spacing: $body-letter-spacing;
