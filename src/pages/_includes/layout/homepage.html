@@ -16,7 +16,7 @@
 	<div class="col-12">
 		<div class="row row-cards">
 			<div class="col-sm-6 col-lg-3">
-				{% include cards/small-stats.html color="blue" icon="currency-dollar" title="132 Sales" description="12 waiting payments" %}
+				{% include cards/small-stats.html color="primary" icon="currency-dollar" title="132 Sales" description="12 waiting payments" %}
 			</div>
 			<div class="col-sm-6 col-lg-3">
 				{% include cards/small-stats.html color="green" icon="shopping-cart" title="78 Orders" description="32 shipped" %}
@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="col-lg-6">
-		{% include cards/map.html title="Locations" %}
+		{% include cards/map-vector.html title="Locations" %}
 	</div>
 
 	{% comment %}
@@ -69,9 +69,9 @@
 					<div class="card-body">
 						<p class="mb-3">Using Storage <strong>6854.45 MB </strong>of 8 GB</p>
 						<div class="progress progress-separated mb-3">
-							<div class="progress-bar bg-primary" role="progressbar" style="width: 44%"></div>
-							<div class="progress-bar bg-info" role="progressbar" style="width: 19%"></div>
-							<div class="progress-bar bg-success" role="progressbar" style="width: 9%"></div>
+							<div class="progress-bar bg-primary" role="progressbar" style="width: 44%" aria-label="Regular"></div>
+							<div class="progress-bar bg-info" role="progressbar" style="width: 19%" aria-label="System"></div>
+							<div class="progress-bar bg-success" role="progressbar" style="width: 9%" aria-label="Shared"></div>
 						</div>
 						<div class="row">
 							<div class="col-auto d-flex align-items-center pe-2">
@@ -104,7 +104,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-lg-6">
 		{% include cards/development-activity.html %}
 	</div>
 

@@ -12,20 +12,34 @@ body:not(.theme-dark) .hide-theme-light {
 
 @include dark-mode {
   & {
-    --#{$variable-prefix}body-color: #{$dark-mode-text};
-    --#{$variable-prefix}body-color-rgb: #{to-rgb($dark-mode-text)};
+    --#{$prefix}body-color: #{$dark-mode-text};
+    --#{$prefix}body-color-rgb: #{to-rgb($dark-mode-text)};
 
-    --#{$variable-prefix}body-bg: #{$dark-mode-darken};
-    --#{$variable-prefix}body-bg-rgb: #{to-rgb($dark-mode-darken)};
+    --#{$prefix}body-bg: #{$dark-mode-darken};
+    --#{$prefix}body-bg-rgb: #{to-rgb($dark-mode-darken)};
 
-    --#{$variable-prefix}card-bg: #{$dark};
-    --#{$variable-prefix}card-bg-rgb: #{to-rgb($dark)};
+    --#{$prefix}bg-forms: #{$dark-mode-darken};
+    --#{$prefix}bg-surface: #{$dark};
 
-    --#{$variable-prefix}border-color: #{$dark-mode-border-color};
-    --#{$variable-prefix}border-color-light: #{$dark-mode-border-color-light};
+    --#{$prefix}card-bg: #{$dark-mode-darken};
+    --#{$prefix}card-bg-hover: #{$dark-mode-darken};
+    --#{$prefix}card-bg-rgb: #{to-rgb($dark-mode-darken)};
+    --#{$prefix}card-color: #{$dark-mode-text};
+
+    --#{$prefix}border-color: #{$dark-mode-border-color};
+    --#{$prefix}border-color-light: #{$dark-mode-border-color-light};
+
+    --#{$prefix}btn-color: #{$dark-mode-darken};
+
+    --#{$prefix}code-color: var(--#{$prefix}body-color);
+    --#{$prefix}code-bg: #{$dark-mode-border-color-light};
 
     color: $dark-mode-text;
     background-color: $dark-mode-darken;
+  }
+
+  .page {
+    color: $dark-mode-text;
   }
 
   .hide-theme-dark {
@@ -43,9 +57,19 @@ body:not(.theme-dark) .hide-theme-light {
   .modal-content,
   .modal-header,
   .dropdown-menu,
+  .toast,
+  .toast-header,
   .alert:not(.alert-important) {
-    background-color: $dark;
+    background-color: var(--#{$prefix}bg-surface);
     color: inherit;
+  }
+
+  .modal {
+    --#{$prefix}modal-border-color: var(--#{$prefix}border-color);
+  }
+
+  .bg-light {
+    background-color: $dark-mode-darken !important;
   }
 
   .card {
@@ -102,11 +126,7 @@ body:not(.theme-dark) .hide-theme-light {
   }
 
   .avatar {
-    --#{$variable-prefix}avatar-bg: #{$dark-mode-lighten};
-  }
-
-  .avatar-list-stacked .avatar {
-    box-shadow: 0 0 0 2px $dark;
+    --#{$prefix}avatar-bg: #{$dark-mode-lighten};
   }
 
   .markdown,
@@ -125,7 +145,7 @@ body:not(.theme-dark) .hide-theme-light {
   }
 
   .apexcharts-gridline {
-    stroke: var(--#{$variable-prefix}border-color);
+    stroke: var(--#{$prefix}border-color);
   }
 
   .apexcharts-legend-text {
@@ -134,12 +154,12 @@ body:not(.theme-dark) .hide-theme-light {
 
   .apexcharts-tooltip {
     background: $dark !important;
-    border: 1px solid $dark-mode-border-color !important;
+    border: var(--#{$prefix}border-width) solid $dark-mode-border-color !important;
     box-shadow: 2px 2px 6px -4px $dark-mode-darken !important;
 
     .apexcharts-tooltip-title {
       background: $dark !important;
-      border-bottom: 1px solid $dark-mode-border-color !important;
+      border-bottom: var(--#{$prefix}border-width) solid $dark-mode-border-color !important;
     }
   }
 
@@ -152,13 +172,23 @@ body:not(.theme-dark) .hide-theme-light {
     background: transparent;
   }
 
-  .list-group-item {
-    color: $dark-mode-text;
-    border-color: $border-color-transparent;
-  }
-
   .list-group-header {
     background: $dark-mode-darken;
+  }
+
+  .list-group-item {
+    //border-color: $border-color-transparent;
+  }
+
+  .list-group-item:not(.disabled):not(:disabled) {
+    color: $dark-mode-text;
+  }
+
+  .list-group-item {
+    &.disabled,
+    &:disabled {
+      color: $gray-600;
+    }
   }
 
   .apexcharts-radialbar-area {
@@ -167,11 +197,11 @@ body:not(.theme-dark) .hide-theme-light {
 
   .form-control.is-invalid,
   .was-validated .form-control:invalid {
-    border-color: var(--#{$variable-prefix}danger);
+    border-color: var(--#{$prefix}danger);
   }
 
   .form-control.is-valid,
   .was-validated .form-control:valid {
-    border-color: var(--#{$variable-prefix}success);
+    border-color: var(--#{$prefix}success);
   }
 }

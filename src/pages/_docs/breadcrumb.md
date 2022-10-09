@@ -1,6 +1,6 @@
 ---
 title: Breadcrumb
-menu: docs.components.breadcrumb
+menu: help.docs.components.breadcrumb
 description: Breadcrumbs are used to show the current website or app location and reduce the number of actions users have to take. Thanks to breadcrumbs, they can easily navigate within the website hierarchy and better understand its structure.
 bootstrap-link: components/breadcrumb/
 ---
@@ -35,12 +35,11 @@ If you wish to use different separators, modify the `$breadcrumb-variants` varia
 {% endcapture %}
 {% include example.html code=code centered=true %}
 
+## Breadcrumb in headers
 
-## Alternate version
-
-Use the `breadcrumb-alternate` class to make the breadcrumb colors more neutral, retaining its function of showing the current location within an interface.  
+If you wish to use breadcrumbs in headers, place them above the headers.
 
 {% capture code %}
-{% include ui/breadcrumb.html class="breadcrumb-alternate" %}
+{% include layout/headers/page-header-4.html %}
 {% endcapture %}
-{% include example.html code=code centered=true %}
+{% include example.html code=code columns=2 %}

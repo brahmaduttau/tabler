@@ -1,6 +1,6 @@
 ---
 title: Avatars
-menu: docs.components.avatars
+menu: help.docs.components.avatars
 description: Avatars help customise various elements of a user interface and make the product experience more personalised. They are often used in communication apps, collaboration tools and social media.
 ---
 
@@ -63,7 +63,7 @@ Customize the color of the avatars' background. You can click [here]({% docs_url
 {% include ui/avatar.html placeholder="AB" color="green" %}
 {% include ui/avatar.html placeholder="CD" color="red" %}
 {% include ui/avatar.html placeholder="EF" color="yellow" %}
-{% include ui/avatar.html placeholder="GH" color="blue" %}
+{% include ui/avatar.html placeholder="GH" color="primary" %}
 {% include ui/avatar.html placeholder="IJ" color="purple" %}
 {% endcapture %}
 {% include example.html code=code centered=true %}

@@ -6,7 +6,7 @@ const gulp = require('gulp'),
 	header = require('gulp-header'),
 	cleanCSS = require('gulp-clean-css'),
 	rtlcss = require('gulp-rtlcss'),
-	minifyJS = require('gulp-minify'),
+	minifyJS = require('gulp-terser'),
 	rename = require('gulp-rename'),
 	purgecss = require('gulp-purgecss'),
 	rollupStream = require('@rollup/stream'),
@@ -17,7 +17,6 @@ const gulp = require('gulp'),
 	rollupReplace = require('@rollup/plugin-replace'),
 	vinylSource = require('vinyl-source-stream'),
 	vinylBuffer = require('vinyl-buffer'),
-	critical = require('critical').stream,
 	browserSync = require('browser-sync'),
 	glob = require('glob'),
 	spawn = require('cross-spawn'),
@@ -264,12 +263,10 @@ const compileJs = function (name, mjs = false) {
 		}))
 
 	if (BUILD) {
-		g.pipe(minifyJS({
-			ext: {
-				src: '.js',
-				min: '.min.js'
-			},
-		}))
+		g.pipe(minifyJS())
+			.pipe(rename((path) => {
+				path.extname = '.min.js'
+			}))
 			.pipe(gulp.dest(`${distDir}/js/`))
 	}
 
@@ -285,6 +282,10 @@ gulp.task('js', () => {
 
 gulp.task('js-demo', () => {
 	return compileJs('demo')
+})
+
+gulp.task('js-demo-theme', () => {
+	 return compileJs('demo-theme')
 })
 
 /**
@@ -331,12 +332,10 @@ gulp.task('mjs', () => {
 		}))
 
 	if (BUILD) {
-		g.pipe(minifyJS({
-			ext: {
-				src: '.js',
-				min: '.min.js'
-			},
-		}))
+		g.pipe(minifyJS())
+			.pipe(rename((path) => {
+				path.extname = '.min.js'
+			}))
 			.pipe(gulp.dest(`${distDir}/js/`))
 	}
 
@@ -348,7 +347,7 @@ gulp.task('mjs', () => {
  */
 gulp.task('watch-jekyll', (cb) => {
 	browserSync.notify('Building Jekyll')
-	return spawn('bundle', ['exec', 'jekyll', 'build', '--watch', '--destination', demoDir, '--trace'], { stdio: 'inherit' })
+	return spawn('bundle', ['exec', 'jekyll', 'build', '--watch', '--incremental', '--destination', demoDir, '--trace'], { stdio: 'inherit' })
 		.on('close', cb)
 })
 
@@ -389,38 +388,13 @@ gulp.task('build-purgecss', (cb) => {
 	cb()
 })
 
-gulp.task('build-critical', (cb) => {
-	if (argv.preview) {
-		return gulp
-			.src('demo/**/*.html')
-			.pipe(
-				critical({
-					base: 'demo/',
-					inline: true,
-					css: ['demo/dist/css/tabler.css'],
-					ignore: {
-						atrule: ['@font-face', '@import'],
-						decl: (node, value) => {
-							/url\(/.test(value)
-						},
-					},
-				})
-			)
-			.on('error', err => {
-				console.log(err.message)
-			})
-			.pipe(gulp.dest('demo'))
-	}
-
-	cb()
-})
 
 /**
  * Watch JS and SCSS files
  */
 gulp.task('watch', (cb) => {
 	gulp.watch('./src/scss/**/*.scss', gulp.series('sass'))
-	gulp.watch('./src/js/**/*.js', gulp.parallel('js', 'mjs', 'js-demo'))
+	gulp.watch('./src/js/**/*.js', gulp.parallel('js', 'mjs', gulp.parallel('js-demo', 'js-demo-theme')))
 	cb()
 })
 
@@ -464,12 +438,16 @@ gulp.task('copy-libs', (cb) => {
 		files.push(Array.isArray(allLibs.css[lib]) ? allLibs.css[lib] : [allLibs.css[lib]])
 	})
 
+  Object.keys(allLibs['js-copy']).forEach((lib) => {
+	 files.push(allLibs['js-copy'][lib])
+  })
+
 	files = files.flat()
 
 	files.forEach((file) => {
 		if (!file.match(/^https?/)) {
 			let dirname = path.dirname(file).replace('@', '')
-			let cmd = `mkdir -p "dist/libs/${dirname}" && cp -r node_modules/${file} ${distDir}/libs/${file.replace('@', '')}`
+			let cmd = `mkdir -p "${distDir}/libs/${dirname}" && cp -r node_modules/${dirname}/* ${distDir}/libs/${dirname}`
 
 			cp.exec(cmd)
 		}
@@ -516,8 +494,8 @@ gulp.task('add-banner', () => {
 
 gulp.task('clean', gulp.series('clean-dirs', 'clean-jekyll'))
 
-gulp.task('start', gulp.series('clean', 'sass', 'js', 'js-demo', 'mjs', 'build-jekyll', gulp.parallel('watch-jekyll', 'watch', 'browser-sync')))
+gulp.task('start', gulp.series('clean', 'sass', 'js', gulp.parallel('js-demo', 'js-demo-theme'), 'mjs', 'build-jekyll', gulp.parallel('watch-jekyll', 'watch', 'browser-sync')))
 
-gulp.task('build-core', gulp.series('build-on', 'clean', 'sass', 'css-rtl', 'css-minify', 'js', 'js-demo', 'mjs', 'copy-images', 'copy-libs', 'add-banner'))
-gulp.task('build-demo', gulp.series('build-on', 'build-jekyll', 'copy-static', 'copy-dist', 'build-cleanup', 'build-purgecss'/*, 'build-critical'*/))
+gulp.task('build-core', gulp.series('build-on', 'clean', 'sass', 'css-rtl', 'css-minify', 'js', gulp.parallel('js-demo', 'js-demo-theme'), 'mjs', 'copy-images', 'copy-libs', 'add-banner'))
+gulp.task('build-demo', gulp.series('build-on', 'build-jekyll', 'copy-static', 'copy-dist', 'build-cleanup', 'build-purgecss'))
 gulp.task('build', gulp.series('build-core', 'build-demo'))

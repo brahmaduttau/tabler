@@ -1,7 +1,3 @@
-.nav {
-  margin: 0;
-}
-
 .nav-vertical {
   &,
   .nav {
@@ -11,13 +7,13 @@
 
   .nav {
     margin-left: 1.25rem;
-    border-left: 1px solid var(--#{$variable-prefix}border-color);
+    border-left: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
     padding-left: .5rem;
   }
 
   .nav-link.active,
   .nav-item.show .nav-link {
-    font-weight: $font-weight-bold;
+    font-weight: var(--#{$prefix}font-weight-bold);
   }
 
   &.nav-pills {
@@ -43,6 +39,7 @@
     margin: 0 0 (- $nav-bordered-border-width );
     border: 0;
     border-bottom: $nav-bordered-link-active-border-width solid transparent;
+    color: $text-muted;
   }
 
   .nav-link.active,
@@ -56,7 +53,7 @@
 .nav-tabs-alt {
   .nav-link {
     font-size: 13px;
-    font-weight: $font-weight-bold;
+    font-weight: var(--#{$prefix}font-weight-bold);
     text-transform: uppercase;
   }
 }
@@ -83,10 +80,10 @@
 }
 
 .nav-link-icon {
-  width: 1.5rem;
-  height: $icon-size;
-  margin-right: .25rem;
-  opacity: $text-muted-opacity;
+  width: $nav-link-icon-size;
+  height: $nav-link-icon-size;
+  margin-right: .5rem;
+  color: $nav-link-icon-color;
 
   svg {
     display: block;

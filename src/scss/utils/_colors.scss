@@ -1,18 +1,27 @@
-// stylelint-disable declaration-no-important
-
 // All colors
-@each $color, $value in theme-colors() {
+@each $color, $value in $theme-colors {
   .bg-#{"" + $color} {
-    color: #ffffff !important;
-    background: $value !important;
-  }
-
-  .text-#{"" + $color} {
-    color: $value !important;
+    background-color: var(--#{$prefix}#{$color}) !important;
   }
 
   .bg-#{"" + $color}-lt {
-    color: $value !important;
-    background: theme-color-lighter($value, true) !important;
+    color: var(--#{$prefix}#{$color}) !important;
+    background: rgba(var(--#{$prefix}#{$color}-rgb), .1) !important; //todo
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .text-#{"" + $color} {
+    color: var(--#{$prefix}#{$color}) !important;
+  }
+}
+
+@each $color, $value in $gray-colors {
+  .bg-#{"" + $color} {
+    background-color: var(--#{$prefix}#{$color}) !important;
+  }
+
+  .text-#{"" + $color}-fg {
+    color: color-contrast($value ) !important;
   }
 }

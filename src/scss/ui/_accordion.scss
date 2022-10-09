@@ -1,3 +1,7 @@
+.accordion {
+ --#{$prefix}accordion-color: #{$accordion-color};
+}
+
 .accordion-button {
   &:focus:not(:focus-visible) {
     outline: none;
@@ -9,7 +13,7 @@
   }
 
   &:not(.collapsed) {
-    font-weight: $font-weight-bold;
+    font-weight: var(--#{$prefix}font-weight-bold);
     border-bottom-color: transparent;
     box-shadow: none;
 
