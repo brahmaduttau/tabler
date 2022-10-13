@@ -20,6 +20,7 @@ body:not(.theme-dark) .hide-theme-light {
 
     --#{$prefix}bg-forms: #{$dark-mode-darken};
     --#{$prefix}bg-surface: #{$dark};
+    --#{$prefix}bg-surface-secondary: #{$dark-mode-darken};
 
     --#{$prefix}card-bg: #{$dark-mode-darken};
     --#{$prefix}card-bg-hover: #{$dark-mode-darken};
@@ -72,10 +73,6 @@ body:not(.theme-dark) .hide-theme-light {
     background-color: $dark-mode-darken !important;
   }
 
-  .card {
-    border-color: transparent;
-  }
-
   .card-tabs .nav-tabs .nav-link {
     background-color: $dark-mode-darken;
     color: inherit;
@@ -101,7 +98,6 @@ body:not(.theme-dark) .hide-theme-light {
   .form-select,
   .form-file-text,
   .form-control,
-  .form-selectgroup-label,
   .form-selectgroup-check,
   .form-imagecheck-figure:before {
     background-color: $dark-mode-darken;
